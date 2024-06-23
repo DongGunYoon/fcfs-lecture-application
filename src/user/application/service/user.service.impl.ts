@@ -16,4 +16,10 @@ export class UserServiceImpl implements UserService {
 
     return user;
   }
+
+  async signUp(name: string): Promise<UserDomain> {
+    const user = UserDomain.create(name);
+
+    return await this.userRepository.create(user);
+  }
 }

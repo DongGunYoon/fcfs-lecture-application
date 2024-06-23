@@ -4,4 +4,5 @@ export const userServiceSymbol = Symbol.for('UserService');
 
 export interface UserService {
   getOrThrow(id: number): Promise<UserDomain>;
+  signUp(name: string): Promise<UserDomain>;
 }

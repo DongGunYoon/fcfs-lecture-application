@@ -10,7 +10,7 @@ export class UserMapper {
     return {
       id: domain.id,
       name: domain.name,
-      createdAt: null,
+      createdAt: undefined,
     };
   }
 }
