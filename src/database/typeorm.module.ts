@@ -12,7 +12,7 @@ import * as path from 'path';
       password: 'password',
       database: 'fcfs-lecture-application',
       entities: [path.join(__dirname, '..', '**', '*.entity.{ts,js}')],
-      synchronize: true,
+      synchronize: false,
       logging: false,
     }),
   ],
