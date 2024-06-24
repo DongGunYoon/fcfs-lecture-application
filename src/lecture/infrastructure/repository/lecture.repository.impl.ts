@@ -3,8 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { LectureRepository } from 'src/lecture/domain/interface/lecture.repository';
 import { LectureEntity } from '../entity/lecture.entity';
 import { LectureDomain } from 'src/lecture/domain/model/lecture.domain';
-import { Repository } from 'typeorm';
+import { EntityManager, FindOneOptions, Repository } from 'typeorm';
 import { LectureMapper } from 'src/lecture/domain/mapper/lecture.mapper';
+import { Nullable } from 'src/common/type/native';
 
 @Injectable()
 export class LectureRepositoryImpl implements LectureRepository {
@@ -14,5 +15,14 @@ export class LectureRepositoryImpl implements LectureRepository {
     const lectureEntity = await this.lectureRepository.save(LectureMapper.toEntity(lecture));
 
     return LectureMapper.toDomain(lectureEntity);
+  }
+
+  async findOneWithEntityManager(
+    entityManager: EntityManager,
+    options: FindOneOptions<LectureEntity>,
+  ): Promise<Nullable<LectureDomain>> {
+    const lectureEntity = await entityManager.findOne(LectureEntity, options);
+
+    return lectureEntity ?? LectureMapper.toDomain(lectureEntity);
   }
 }

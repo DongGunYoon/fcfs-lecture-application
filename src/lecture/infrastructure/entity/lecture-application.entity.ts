@@ -1,8 +1,8 @@
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
-@Entity('lecture_application_histories')
+@Entity('lecture_applications')
 @Unique('lecture_application_user_lecture', ['userId', 'lectureId'])
-export class LectureApplicationHistoryEntity {
+export class LectureApplicationEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
