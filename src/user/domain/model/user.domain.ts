@@ -8,7 +8,6 @@ export class UserDomain {
   ) {}
 
   static create(name: string): UserDomain {
-    console.log(name);
     const trimmedName = name.trim();
 
     if (trimmedName.length == 0) {
@@ -19,6 +18,6 @@ export class UserDomain {
       throw new BadRequestException('이름이 최대 길이를 초과했습니다.');
     }
 
-    return new UserDomain(null, name, null);
+    return new UserDomain(null, trimmedName, null);
   }
 }
