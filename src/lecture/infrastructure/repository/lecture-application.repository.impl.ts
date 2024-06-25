@@ -25,7 +25,13 @@ export class LectureApplicationRepositoryImpl implements LectureApplicationRepos
     return await this.lectureApplicationRepository.count({ where: { lectureId } });
   }
 
-  async findOneByUserIdAndLectureId(userId: number, lectureId: number): Promise<boolean> {
+  async existsByUserIdAndLectureId(userId: number, lectureId: number): Promise<boolean> {
     return await this.lectureApplicationRepository.existsBy({ userId, lectureId });
+  }
+
+  async findAllByUserId(userId: number): Promise<LectureApplicationDomain[]> {
+    const applicationEntites = await this.lectureApplicationRepository.findBy({ userId });
+
+    return applicationEntites.map(entity => LectureApplicationMapper.toDomain(entity));
   }
 }

@@ -46,7 +46,7 @@ export class LectureServiceImpl implements LectureService {
         throw new ConflictException('수강 신청의 최대 정원을 초과 했습니다.');
       }
 
-      const hasAlreadyApplied = await this.lectureApplicationRepository.findOneByUserIdAndLectureId(
+      const hasAlreadyApplied = await this.lectureApplicationRepository.existsByUserIdAndLectureId(
         lectureApplication.userId,
         lectureApplication.lectureId,
       );
@@ -57,5 +57,9 @@ export class LectureServiceImpl implements LectureService {
 
       return await this.lectureApplicationRepository.create(lectureApplication);
     });
+  }
+
+  async getApplications(userId: number): Promise<LectureApplicationDomain[]> {
+    return await this.lectureApplicationRepository.findAllByUserId(userId);
   }
 }

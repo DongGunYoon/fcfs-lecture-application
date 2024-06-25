@@ -8,7 +8,7 @@ import { LectureServiceImpl } from './application/service/lecture.service.impl';
 import { lectureRepositorySymbol } from './domain/interface/lecture.repository';
 import { LectureRepositoryImpl } from './infrastructure/repository/lecture.repository.impl';
 import { lectureApplicationRepositorySymbol } from './domain/interface/lecture-application.repository';
-import { LectureApplicationRepositoryImpl } from './infrastructure/repository/lecture-application.impl';
+import { LectureApplicationRepositoryImpl } from './infrastructure/repository/lecture-application.repository.impl';
 
 @Module({
   imports: [TypeOrmModule.forFeature([LectureEntity, LectureApplicationEntity])],

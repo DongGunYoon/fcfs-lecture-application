@@ -1,7 +1,8 @@
-import { Body, Controller, Inject, Post } from '@nestjs/common';
+import { Body, Controller, Get, Inject, Param, ParseIntPipe, Post } from '@nestjs/common';
 import { ApplyLectureRequest } from 'src/lecture/application/dto/request/apply-lecture.request';
 import { CreateLectureRequest } from 'src/lecture/application/dto/request/create-lecture.request';
 import { LectureApplicationResponse } from 'src/lecture/application/dto/response/lecture-application.response';
+import { LectureApplicationsResponse } from 'src/lecture/application/dto/response/lecture-applications.response';
 import { LectureResponse } from 'src/lecture/application/dto/response/lecture.response';
 import { LectureService, lectureServiceSymbol } from 'src/lecture/domain/interface/lecture.service';
 
@@ -21,5 +22,12 @@ export class LectureController {
     const lectureApplication = await this.lectureService.apply(request);
 
     return LectureApplicationResponse.from(lectureApplication);
+  }
+
+  @Get('application/:userId')
+  async getApplications(@Param('userId', ParseIntPipe) userId: number): Promise<LectureApplicationResponse[]> {
+    const lectureApplications = await this.lectureService.getApplications(userId);
+
+    return LectureApplicationsResponse.from(lectureApplications);
   }
 }
