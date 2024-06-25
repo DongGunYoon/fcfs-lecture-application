@@ -30,8 +30,8 @@ export class LectureApplicationRepositoryImpl implements LectureApplicationRepos
   }
 
   async findAllByUserId(userId: number): Promise<LectureApplicationDomain[]> {
-    const applicationEntites = await this.lectureApplicationRepository.findBy({ userId });
+    const applicationEntities = await this.lectureApplicationRepository.findBy({ userId });
 
-    return applicationEntites.map(entity => LectureApplicationMapper.toDomain(entity));
+    return applicationEntities.map(entity => LectureApplicationMapper.toDomain(entity));
   }
 }
