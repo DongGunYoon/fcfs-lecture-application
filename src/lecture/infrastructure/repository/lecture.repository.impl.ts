@@ -27,4 +27,10 @@ export class LectureRepositoryImpl implements LectureRepository {
 
     return LectureMapper.toDomain(lectureEntity);
   }
+
+  async findAll(): Promise<LectureDomain[]> {
+    const lectureEntities = await this.lectureRepository.find({ order: { startAt: 'ASC' } });
+
+    return lectureEntities.map(entity => LectureMapper.toDomain(entity));
+  }
 }

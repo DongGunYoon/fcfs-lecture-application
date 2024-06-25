@@ -59,6 +59,10 @@ export class LectureServiceImpl implements LectureService {
     });
   }
 
+  async getLectures(): Promise<LectureDomain[]> {
+    return await this.lectureRepository.findAll();
+  }
+
   async getApplications(userId: number): Promise<LectureApplicationDomain[]> {
     return await this.lectureApplicationRepository.findAllByUserId(userId);
   }

@@ -11,4 +11,5 @@ export interface LectureRepository {
     entityManager: EntityManager,
     options: FindOneOptions<LectureEntity>,
   ): Promise<Nullable<LectureDomain>>;
+  findAll(): Promise<LectureDomain[]>;
 }

@@ -8,5 +8,6 @@ export const lectureServiceSymbol = Symbol.for('LectureService');
 export interface LectureService {
   create(request: CreateLectureRequest): Promise<LectureDomain>;
   apply(request: ApplyLectureRequest): Promise<LectureApplicationDomain>;
+  getLectures(): Promise<LectureDomain[]>;
   getApplications(userId: number): Promise<LectureApplicationDomain[]>;
 }
