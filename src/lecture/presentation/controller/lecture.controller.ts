@@ -3,8 +3,9 @@ import { ApplyLectureRequest } from 'src/lecture/application/dto/request/apply-l
 import { CreateLectureRequest } from 'src/lecture/application/dto/request/create-lecture.request';
 import { LectureApplicationResponse } from 'src/lecture/application/dto/response/lecture-application.response';
 import { LectureApplicationsResponse } from 'src/lecture/application/dto/response/lecture-applications.response';
+import { LectureScheduleResponse } from 'src/lecture/application/dto/response/lecture-schedule.response';
+import { LectureSchedulesResponse } from 'src/lecture/application/dto/response/lecture-schedules.response';
 import { LectureResponse } from 'src/lecture/application/dto/response/lecture.response';
-import { LecturesResponse } from 'src/lecture/application/dto/response/lectures.response';
 import { LectureService, lectureServiceSymbol } from 'src/lecture/domain/interface/lecture.service';
 
 @Controller('lectures')
@@ -26,10 +27,10 @@ export class LectureController {
   }
 
   @Get()
-  async getLectures(): Promise<LectureResponse[]> {
-    const lectures = await this.lectureService.getLectures();
+  async getLectureSchedules(): Promise<LectureScheduleResponse[]> {
+    const lectureSchedules = await this.lectureService.getLectureSchedules();
 
-    return LecturesResponse.from(lectures);
+    return LectureSchedulesResponse.from(lectureSchedules);
   }
 
   @Get('application/:userId')

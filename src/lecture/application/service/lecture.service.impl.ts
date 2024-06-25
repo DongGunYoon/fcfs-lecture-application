@@ -10,12 +10,19 @@ import {
   lectureApplicationRepositorySymbol,
 } from 'src/lecture/domain/interface/lecture-application.repository';
 import { DataSource, EntityManager } from 'typeorm';
+import {
+  LectureScheduleRepository,
+  lectureScheduleRepositorySymbol,
+} from 'src/lecture/domain/interface/lecture-schedule.repository';
+import { LectureScheduleDomain } from 'src/lecture/domain/model/lecture-schedule.domain';
 
 @Injectable()
 export class LectureServiceImpl implements LectureService {
   constructor(
     @Inject(lectureRepositorySymbol)
     private readonly lectureRepository: LectureRepository,
+    @Inject(lectureScheduleRepositorySymbol)
+    private readonly lectureScheduleRepository: LectureScheduleRepository,
     @Inject(lectureApplicationRepositorySymbol)
     private readonly lectureApplicationRepository: LectureApplicationRepository,
     private readonly dataSource: DataSource,
@@ -28,27 +35,27 @@ export class LectureServiceImpl implements LectureService {
   }
 
   async apply(request: ApplyLectureRequest): Promise<LectureApplicationDomain> {
-    const lectureApplication = LectureApplicationDomain.create(request.userId, request.lectureId);
+    const lectureApplication = LectureApplicationDomain.create(request.userId, request.lectureScheduleId);
 
     return await this.dataSource.transaction(async (transactionManager: EntityManager) => {
-      const lecture = await this.lectureRepository.findOneWithEntityManager(transactionManager, {
-        where: { id: lectureApplication.lectureId },
+      const lectureSchedule = await this.lectureScheduleRepository.findOneWithEntityManager(transactionManager, {
+        where: { id: lectureApplication.lectureScheduleId },
         lock: { mode: 'pessimistic_write' },
       });
 
-      if (lecture === null) {
-        throw new NotFoundException('강의가 존재하지 않습니다.');
+      if (lectureSchedule === null) {
+        throw new NotFoundException('강의 스케쥴이 존재하지 않습니다.');
       }
 
-      const applicationCount = await this.lectureApplicationRepository.countByLectureId(lecture.id);
+      const applicationCount = await this.lectureApplicationRepository.countByLectureScheduleId(lectureSchedule.id);
 
-      if (lecture.applicationCapacity <= applicationCount) {
+      if (lectureSchedule.applicationCapacity <= applicationCount) {
         throw new ConflictException('수강 신청의 최대 정원을 초과 했습니다.');
       }
 
-      const hasAlreadyApplied = await this.lectureApplicationRepository.existsByUserIdAndLectureId(
+      const hasAlreadyApplied = await this.lectureApplicationRepository.existsByUserIdAndLectureScheduleId(
         lectureApplication.userId,
-        lectureApplication.lectureId,
+        lectureApplication.lectureScheduleId,
       );
 
       if (hasAlreadyApplied) {
@@ -59,8 +66,8 @@ export class LectureServiceImpl implements LectureService {
     });
   }
 
-  async getLectures(): Promise<LectureDomain[]> {
-    return await this.lectureRepository.findAll();
+  async getLectureSchedules(): Promise<LectureScheduleDomain[]> {
+    return await this.lectureScheduleRepository.findAll();
   }
 
   async getApplications(userId: number): Promise<LectureApplicationDomain[]> {

@@ -3,15 +3,15 @@ import { LectureApplicationDomain } from '../model/lecture-application.domain';
 
 export class LectureApplicationMapper {
   static toDomain(entity: LectureApplicationEntity): LectureApplicationDomain {
-    return new LectureApplicationDomain(entity.id, entity.userId, entity.lectureId, entity.appliedAt);
+    return new LectureApplicationDomain(entity.id, entity.userId, entity.lectureScheduleId, entity.appliedAt);
   }
 
   static toEntity(domain: LectureApplicationDomain): LectureApplicationEntity {
     return {
       id: domain.id,
       userId: domain.userId,
-      lectureId: domain.lectureId,
-      appliedAt: undefined,
+      lectureScheduleId: domain.lectureScheduleId,
+      appliedAt: new Date(),
     };
   }
 }

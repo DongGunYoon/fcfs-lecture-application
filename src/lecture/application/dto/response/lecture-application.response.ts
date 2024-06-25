@@ -3,14 +3,14 @@ import { LectureApplicationDomain } from 'src/lecture/domain/model/lecture-appli
 export class LectureApplicationResponse {
   id: number;
   userId: number;
-  lectureId: number;
+  lectureScheduleId: number;
   appliedAt: Date;
 
   static from(lectureApplication: LectureApplicationDomain): LectureApplicationResponse {
     return {
       id: lectureApplication.id,
       userId: lectureApplication.userId,
-      lectureId: lectureApplication.lectureId,
+      lectureScheduleId: lectureApplication.lectureScheduleId,
       appliedAt: lectureApplication.appliedAt,
     };
   }

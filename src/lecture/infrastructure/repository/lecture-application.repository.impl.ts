@@ -21,12 +21,12 @@ export class LectureApplicationRepositoryImpl implements LectureApplicationRepos
     return LectureApplicationMapper.toDomain(lectureApplicationEntity);
   }
 
-  async countByLectureId(lectureId: number): Promise<number> {
-    return await this.lectureApplicationRepository.count({ where: { lectureId } });
+  async countByLectureScheduleId(lectureScheduleId: number): Promise<number> {
+    return await this.lectureApplicationRepository.count({ where: { lectureScheduleId } });
   }
 
-  async existsByUserIdAndLectureId(userId: number, lectureId: number): Promise<boolean> {
-    return await this.lectureApplicationRepository.existsBy({ userId, lectureId });
+  async existsByUserIdAndLectureScheduleId(userId: number, lectureScheduleId: number): Promise<boolean> {
+    return await this.lectureApplicationRepository.existsBy({ userId, lectureScheduleId });
   }
 
   async findAllByUserId(userId: number): Promise<LectureApplicationDomain[]> {

@@ -1,7 +1,6 @@
+import { Nullable } from 'src/common/type/native';
+
 export type CreateLectureDTO = {
   name: string;
-  applicationCapacity: number;
-  applicationStartAt: Date;
-  startAt: Date;
-  endAt: Date;
+  description: Nullable<string>;
 };

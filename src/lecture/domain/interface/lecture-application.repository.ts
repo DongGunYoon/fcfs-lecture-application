@@ -4,7 +4,7 @@ export const lectureApplicationRepositorySymbol = Symbol.for('LectureApplication
 
 export interface LectureApplicationRepository {
   create(lectureApplication: LectureApplicationDomain): Promise<LectureApplicationDomain>;
-  countByLectureId(lectureId: number): Promise<number>;
-  existsByUserIdAndLectureId(userId: number, lectureId: number): Promise<boolean>;
+  countByLectureScheduleId(lectureScheduleId: number): Promise<number>;
+  existsByUserIdAndLectureScheduleId(userId: number, lectureScheduleId: number): Promise<boolean>;
   findAllByUserId(userId: number): Promise<LectureApplicationDomain[]>;
 }

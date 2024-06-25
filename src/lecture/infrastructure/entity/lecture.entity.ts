@@ -1,3 +1,4 @@
+import { Nullable } from 'src/common/type/native';
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('lectures')
@@ -8,17 +9,8 @@ export class LectureEntity {
   @Column({ length: 200 })
   name: string;
 
-  @Column({ name: 'application_capacity' })
-  applicationCapacity: number;
-
-  @Column({ name: 'application_start_at', type: 'timestamptz' })
-  applicationStartAt: Date;
-
-  @Column({ name: 'start_at', type: 'timestamptz' })
-  startAt: Date;
-
-  @Column({ name: 'end_at', type: 'timestamptz' })
-  endAt: Date;
+  @Column({ length: 5000, type: 'varchar', nullable: true })
+  description: Nullable<string>;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;

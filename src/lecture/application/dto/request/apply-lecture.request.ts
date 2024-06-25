@@ -5,5 +5,5 @@ export class ApplyLectureRequest {
   userId: number;
 
   @IsInt()
-  lectureId: number;
+  lectureScheduleId: number;
 }
