@@ -25,6 +25,10 @@ export class LectureScheduleDomain {
       throw new BadRequestException('강의 시작 시간이 강의 종료 시간보다 늦을 수 없습니다.');
     }
 
+    if (dto.applicationStartAt > dto.startAt) {
+      throw new BadRequestException('수강 신청 시작 일자는 강의 시작 일자보다 늦을 수 없습니다.');
+    }
+
     return new LectureScheduleDomain(
       0,
       dto.lectureId,
