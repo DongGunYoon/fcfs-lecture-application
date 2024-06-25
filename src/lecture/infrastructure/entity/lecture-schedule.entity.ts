@@ -5,6 +5,9 @@ export class LectureScheduleEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ name: 'lecture_id' })
+  lectureId: number;
+
   @Column({ name: 'application_capacity' })
   applicationCapacity: number;
 

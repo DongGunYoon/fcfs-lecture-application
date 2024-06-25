@@ -18,8 +18,9 @@ export class CreateLectureScheduleRequest {
   @Type(() => Date)
   endAt: Date;
 
-  toDTO(): CreateLectureScheduleDTO {
+  toDTO(lectureId: number): CreateLectureScheduleDTO {
     return {
+      lectureId: lectureId,
       applicationCapacity: this.applicationCapacity,
       applicationStartAt: this.applicationStartAt,
       startAt: this.startAt,

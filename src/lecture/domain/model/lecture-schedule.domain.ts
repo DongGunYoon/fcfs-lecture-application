@@ -4,6 +4,7 @@ import { CreateLectureScheduleDTO } from '../dto/create-lecture-schedule.dto';
 export class LectureScheduleDomain {
   constructor(
     public id: number,
+    public lectureId: number,
     public applicationCapacity: number,
     public applicationStartAt: Date,
     public startAt: Date,
@@ -12,6 +13,10 @@ export class LectureScheduleDomain {
   ) {}
 
   static create(dto: CreateLectureScheduleDTO) {
+    if (dto.lectureId <= 0) {
+      throw new BadRequestException('유효하지 않은 강의 ID 입니다.');
+    }
+
     if (dto.applicationCapacity <= 0) {
       throw new BadRequestException('수강 신청의 정원은 최소 1명 이상이어야 합니다.');
     }
@@ -22,6 +27,7 @@ export class LectureScheduleDomain {
 
     return new LectureScheduleDomain(
       0,
+      dto.lectureId,
       dto.applicationCapacity,
       dto.applicationStartAt,
       dto.startAt,
