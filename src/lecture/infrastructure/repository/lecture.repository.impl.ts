@@ -23,6 +23,8 @@ export class LectureRepositoryImpl implements LectureRepository {
   ): Promise<Nullable<LectureDomain>> {
     const lectureEntity = await entityManager.findOne(LectureEntity, options);
 
-    return lectureEntity ?? LectureMapper.toDomain(lectureEntity);
+    if (!lectureEntity) return null;
+
+    return LectureMapper.toDomain(lectureEntity);
   }
 }
