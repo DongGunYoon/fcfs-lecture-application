@@ -14,5 +14,6 @@ import { UserController } from './presentation/controller/user.controller';
     { provide: userServiceSymbol, useClass: UserServiceImpl },
     { provide: userRepositorySymbol, useClass: UserRepositoryImpl },
   ],
+  exports: [userServiceSymbol],
 })
 export class UserModule {}

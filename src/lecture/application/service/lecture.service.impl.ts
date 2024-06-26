@@ -20,10 +20,13 @@ import {
   LectureCapacityRepository,
   lectureCapacityRepositorySymbol,
 } from 'src/lecture/domain/interface/lecture-capacity.repository';
+import { UserService, userServiceSymbol } from 'src/user/domain/interface/user.service';
 
 @Injectable()
 export class LectureServiceImpl implements LectureService {
   constructor(
+    @Inject(userServiceSymbol)
+    private readonly userService: UserService,
     @Inject(lectureRepositorySymbol)
     private readonly lectureRepository: LectureRepository,
     @Inject(lectureScheduleRepositorySymbol)
@@ -43,6 +46,7 @@ export class LectureServiceImpl implements LectureService {
 
   async apply(request: ApplyLectureRequest): Promise<void> {
     const lectureApplication = LectureApplicationDomain.create(request.userId, request.lectureScheduleId);
+    await this.userService.getOrThrow(request.userId);
 
     await this.dataSource.transaction(async (transactionManager: EntityManager) => {
       const lectureCapacity = await this.lectureCapacityRepository.findOneWithEntityManager(transactionManager, {

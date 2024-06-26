@@ -15,9 +15,11 @@ import { LectureScheduleEntity } from './infrastructure/entity/lecture-schedule.
 import { LectureCapacityEntity } from './infrastructure/entity/lecture-capacity.entity';
 import { lectureCapacityRepositorySymbol } from './domain/interface/lecture-capacity.repository';
 import { LectureCapacityRepositoryImpl } from './infrastructure/repository/lecture-capacity.repository.impl';
+import { UserModule } from 'src/user/user.module';
 
 @Module({
   imports: [
+    UserModule,
     TypeOrmModule.forFeature([LectureEntity, LectureScheduleEntity, LectureCapacityEntity, LectureApplicationEntity]),
   ],
   controllers: [LectureController],
