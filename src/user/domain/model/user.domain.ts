@@ -18,6 +18,6 @@ export class UserDomain {
       throw new BadRequestException('이름이 최대 길이를 초과했습니다.');
     }
 
-    return new UserDomain(null, trimmedName, null);
+    return new UserDomain(0, trimmedName, new Date());
   }
 }

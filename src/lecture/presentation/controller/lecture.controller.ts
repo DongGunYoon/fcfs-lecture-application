@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Inject, Param, ParseIntPipe, Post } from '@nestjs/common';
 import { ApplyLectureRequest } from 'src/lecture/application/dto/request/apply-lecture.request';
+import { CreateLectureScheduleRequest } from 'src/lecture/application/dto/request/create-lecture-schedule.request';
 import { CreateLectureRequest } from 'src/lecture/application/dto/request/create-lecture.request';
 import { LectureApplicationResponse } from 'src/lecture/application/dto/response/lecture-application.response';
 import { LectureApplicationsResponse } from 'src/lecture/application/dto/response/lecture-applications.response';
@@ -20,10 +21,10 @@ export class LectureController {
   }
 
   @Post('apply')
-  async apply(@Body() request: ApplyLectureRequest): Promise<LectureApplicationResponse> {
-    const lectureApplication = await this.lectureService.apply(request);
+  async apply(@Body() request: ApplyLectureRequest): Promise<boolean> {
+    await this.lectureService.apply(request);
 
-    return LectureApplicationResponse.from(lectureApplication);
+    return true;
   }
 
   @Get()
@@ -31,6 +32,16 @@ export class LectureController {
     const lectureSchedules = await this.lectureService.getLectureSchedules();
 
     return LectureSchedulesResponse.from(lectureSchedules);
+  }
+
+  @Post(':lectureId/schedules')
+  async createLectureSchedule(
+    @Param('lectureId', ParseIntPipe) lectureId: number,
+    @Body() request: CreateLectureScheduleRequest,
+  ): Promise<LectureScheduleResponse> {
+    const lectureSchedule = await this.lectureService.createLectureSchedule(request.toDTO(lectureId));
+
+    return LectureScheduleResponse.from(lectureSchedule);
   }
 
   @Get('application/:userId')

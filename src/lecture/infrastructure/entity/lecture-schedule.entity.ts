@@ -1,4 +1,6 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { LectureCapacityEntity } from './lecture-capacity.entity';
+import { LectureEntity } from './lecture.entity';
 
 @Entity('lecture_schedules')
 export class LectureScheduleEntity {
@@ -7,9 +9,6 @@ export class LectureScheduleEntity {
 
   @Column({ name: 'lecture_id' })
   lectureId: number;
-
-  @Column({ name: 'application_capacity' })
-  applicationCapacity: number;
 
   @Column({ name: 'application_start_at', type: 'timestamptz' })
   applicationStartAt: Date;
@@ -22,4 +21,11 @@ export class LectureScheduleEntity {
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamptz' })
   createdAt: Date;
+
+  @ManyToOne(() => LectureEntity, { createForeignKeyConstraints: false })
+  @JoinColumn({ name: 'lecture_id' })
+  lecture!: LectureEntity;
+
+  @OneToOne(() => LectureCapacityEntity, lectureCapacity => lectureCapacity.lectureSchedule, { cascade: true })
+  lectureCapacity!: LectureCapacityEntity;
 }

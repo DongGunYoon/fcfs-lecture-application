@@ -2,8 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { LectureScheduleRepository } from 'src/lecture/domain/interface/lecture-schedule.repository';
 import { LectureScheduleEntity } from '../entity/lecture-schedule.entity';
-import { EntityManager, FindOneOptions, Repository } from 'typeorm';
-import { Nullable } from 'src/common/type/native';
+import { FindManyOptions, Repository } from 'typeorm';
 import { LectureScheduleDomain } from 'src/lecture/domain/model/lecture-schedule.domain';
 import { LectureScheduleMapper } from 'src/lecture/domain/mapper/lecture-schedule.mapper';
 
@@ -14,17 +13,14 @@ export class LectureScheduleRepositoryImpl implements LectureScheduleRepository 
     private readonly lectureScheduleRepository: Repository<LectureScheduleEntity>,
   ) {}
 
-  async findOneWithEntityManager(
-    entityManager: EntityManager,
-    options: FindOneOptions<LectureScheduleEntity>,
-  ): Promise<Nullable<LectureScheduleDomain>> {
-    const lectureScheduleEntity = await entityManager.findOne(LectureScheduleEntity, options);
+  async create(domain: LectureScheduleDomain): Promise<LectureScheduleDomain> {
+    const lectureSchduleEntity = await this.lectureScheduleRepository.save(LectureScheduleMapper.toEntity(domain));
 
-    return lectureScheduleEntity && LectureScheduleMapper.toDomain(lectureScheduleEntity);
+    return LectureScheduleMapper.toDomain(lectureSchduleEntity);
   }
 
-  async findAll(): Promise<LectureScheduleDomain[]> {
-    const lectureScheduleEntities = await this.lectureScheduleRepository.find({ order: { startAt: 'ASC' } });
+  async findAll(options: FindManyOptions<LectureScheduleEntity>): Promise<LectureScheduleDomain[]> {
+    const lectureScheduleEntities = await this.lectureScheduleRepository.find(options);
 
     return lectureScheduleEntities.map(entity => LectureScheduleMapper.toDomain(entity));
   }

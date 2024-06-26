@@ -4,7 +4,7 @@ import { CreateLectureScheduleDTO } from 'src/lecture/domain/dto/create-lecture-
 
 export class CreateLectureScheduleRequest {
   @IsInt()
-  applicationCapacity: number;
+  maxCapacity: number;
 
   @IsDate()
   @Type(() => Date)
@@ -21,7 +21,7 @@ export class CreateLectureScheduleRequest {
   toDTO(lectureId: number): CreateLectureScheduleDTO {
     return {
       lectureId: lectureId,
-      applicationCapacity: this.applicationCapacity,
+      maxCapacity: this.maxCapacity,
       applicationStartAt: this.applicationStartAt,
       startAt: this.startAt,
       endAt: this.endAt,

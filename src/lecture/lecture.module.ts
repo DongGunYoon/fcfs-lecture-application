@@ -12,14 +12,20 @@ import { LectureApplicationRepositoryImpl } from './infrastructure/repository/le
 import { lectureScheduleRepositorySymbol } from './domain/interface/lecture-schedule.repository';
 import { LectureScheduleRepositoryImpl } from './infrastructure/repository/lecture-schedule.repository.impl';
 import { LectureScheduleEntity } from './infrastructure/entity/lecture-schedule.entity';
+import { LectureCapacityEntity } from './infrastructure/entity/lecture-capacity.entity';
+import { lectureCapacityRepositorySymbol } from './domain/interface/lecture-capacity.repository';
+import { LectureCapacityRepositoryImpl } from './infrastructure/repository/lecture-capacity.repository.impl';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([LectureEntity, LectureScheduleEntity, LectureApplicationEntity])],
+  imports: [
+    TypeOrmModule.forFeature([LectureEntity, LectureScheduleEntity, LectureCapacityEntity, LectureApplicationEntity]),
+  ],
   controllers: [LectureController],
   providers: [
     { provide: lectureServiceSymbol, useClass: LectureServiceImpl },
     { provide: lectureRepositorySymbol, useClass: LectureRepositoryImpl },
     { provide: lectureScheduleRepositorySymbol, useClass: LectureScheduleRepositoryImpl },
+    { provide: lectureCapacityRepositorySymbol, useClass: LectureCapacityRepositoryImpl },
     { provide: lectureApplicationRepositorySymbol, useClass: LectureApplicationRepositoryImpl },
   ],
 })

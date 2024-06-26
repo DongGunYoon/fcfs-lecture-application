@@ -2,18 +2,22 @@ import { LectureScheduleDomain } from 'src/lecture/domain/model/lecture-schedule
 
 export class LectureScheduleResponse {
   id: number;
-  applicationCapacity: number;
   applicationStartAt: Date;
   startAt: Date;
   endAt: Date;
+  lectureName: string;
+  maxCapacity: number;
+  currentEnrollment: number;
 
   static from(lectureSchedule: LectureScheduleDomain): LectureScheduleResponse {
     return {
       id: lectureSchedule.id,
-      applicationCapacity: lectureSchedule.applicationCapacity,
       applicationStartAt: lectureSchedule.applicationStartAt,
       startAt: lectureSchedule.startAt,
       endAt: lectureSchedule.endAt,
+      lectureName: lectureSchedule.lecture!.name,
+      maxCapacity: lectureSchedule.lectureCapacity!.maxCapacity,
+      currentEnrollment: lectureSchedule.lectureCapacity!.currentEnrollment,
     };
   }
 }
