@@ -1,6 +1,6 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { UserRepository, userRepositorySymbol } from 'src/user/domain/interface/user.repository';
-import { UserService } from 'src/user/domain/interface/user.service';
+import { UserRepository, userRepositorySymbol } from 'src/user/domain/interface/repository/user.repository';
+import { UserService } from 'src/user/domain/interface/service/user.service';
 import { UserDomain } from 'src/user/domain/model/user.domain';
 
 @Injectable()

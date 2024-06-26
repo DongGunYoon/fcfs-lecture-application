@@ -20,7 +20,7 @@ import {
   LectureCapacityRepository,
   lectureCapacityRepositorySymbol,
 } from 'src/lecture/domain/interface/lecture-capacity.repository';
-import { UserService, userServiceSymbol } from 'src/user/domain/interface/user.service';
+import { UserService, userServiceSymbol } from 'src/user/domain/interface/service/user.service';
 
 @Injectable()
 export class LectureServiceImpl implements LectureService {

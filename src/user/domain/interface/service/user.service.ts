@@ -1,4 +1,4 @@
-import { UserDomain } from '../model/user.domain';
+import { UserDomain } from '../../model/user.domain';
 
 export const userServiceSymbol = Symbol.for('UserService');
 

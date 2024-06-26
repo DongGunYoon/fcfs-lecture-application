@@ -1,5 +1,5 @@
-import { Nullable } from './../../../common/type/native';
-import { UserDomain } from '../model/user.domain';
+import { Nullable } from '../../../../common/type/native';
+import { UserDomain } from '../../model/user.domain';
 
 export const userRepositorySymbol = Symbol.for('UserRepository');
 
