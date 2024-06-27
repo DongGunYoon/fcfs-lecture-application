@@ -1,9 +1,11 @@
-import { readLectureApplicationsUseCaseSymbol } from './../../domain/interface/use-case/read-lecture-applications.use-case';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Nullable } from 'src/common/type/native';
 import { getPgTestTypeOrmModule } from 'src/database/utils/get-test-typeorm.module';
-import { ReadLectureApplicationsUseCase } from 'src/lecture/domain/interface/use-case/read-lecture-applications.use-case';
+import {
+  ReadLectureApplicationsUseCase,
+  readLectureApplicationsUseCaseSymbol,
+} from 'src/lecture/domain/interface/use-case/read-lecture-applications.use-case';
 import { LectureApplicationMapper } from 'src/lecture/domain/mapper/lecture-application.mapper';
 import { LectureScheduleMapper } from 'src/lecture/domain/mapper/lecture-schedule.mapper';
 import { LectureMapper } from 'src/lecture/domain/mapper/lecture.mapper';
