@@ -1,73 +1,34 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# FCFS Lecture Application
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## 개요
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+선착순 수강 신청 시스템을 구현하기 위한 백엔드 애플리케이션입니다. 다수의 서버 인스턴스 환경에서도 동시성 문제가 발생하지 않게 비즈니스 로직을 구성하는게 핵심이었습니다.
 
-## Description
+## 주요 고려 사항
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- 아키텍처 설계
+  - Clean + Layered 방식으로 프로젝트 구조를 설계했습니다.
+  - UseCase를 Service Facade 역할로 사용해 서비스 순환 참조가 발생할 수 있는 상황을 줄였습니다.
+  - 각각의 레이어 사이에 Interface를 통한 추상화로 의존성을 최소화 했습니다.
+  - Database Entity와 Domain Entity를 분리하여 도메인을 보호하고 추후 변경의 용이성을 더했습니다.
+- 동시성 제어를 위한 비관적 락 사용
+  - 선착순 수강 신청 서비스에 성격상 특정 시간에 트래픽이 몰려 충돌이 많이 발생할 것으로 예상되었습니다.
+  - 충돌이 많이 발생할 경우 낙관적 락은 에러 핸들링 혹은 재시도 로직등을 고려해야 하며, 이로 인해 성능이 저하될 수 있다고 판단했습니다.
+  - 비관적 락은 내부적으로 Queue를 통해 Transaction을 관리하기 때문에 요청에 의한 순차처리도 가능하여 더 적합하다고 판단했습니다.
+- 데이터 베이스 설계 (ERD)
+  - 비관적 락을 통한 동시성 처리로 인해 DeadLock 등의 문제가 발생하지 않게 고려했습니다.
+  - 강의의 최대 수용 인원과 현재 수강 신청 인원만을 따로 관리하는 `lecture_capacities` 테이블을 통해 최소한의 리소스로 락을 제어했습니다.
+  - `lecture_capacities`, `lecture_applications` 테이블에서 일부 역정규화 (lecture_id)를 통해 Join을 줄이는 방향을 고려했습니다.
+  - FK를 만들지 않고 ORM에 관계만 명시하여 추후 발생 가능한 성능 이슈를 줄였습니다.
 
-## Installation
+## ERD 다이어그램
 
-```bash
-$ yarn install
-```
+![ERD 다이어그램](assets/images/fcfs_applications_erd.png)
 
-## Running the app
+## API 목록
 
-```bash
-# development
-$ yarn run start
-
-# watch mode
-$ yarn run start:dev
-
-# production mode
-$ yarn run start:prod
-```
-
-## Test
-
-```bash
-# unit tests
-$ yarn run test
-
-# e2e tests
-$ yarn run test:e2e
-
-# test coverage
-$ yarn run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+- 강의 생성 (`POST /lectures`)
+- 강의 스케줄 수강 신청 (`POST /lectures/apply`)
+- 강의 스케줄 생성 (`POST /lectures/:lectureId/schedules`)
+- 강의 스케줄 목록 조회 (`GET /lectures`)
+- 사용자 수강 신청 목록 조회 (`GET /lectures/application/:userId`)
