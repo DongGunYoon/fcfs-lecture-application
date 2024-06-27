@@ -32,11 +32,7 @@ describe('ApplyLectureUseCase', () => {
 
   beforeAll(async () => {
     module = await Test.createTestingModule({
-      imports: [
-        getPgTestTypeOrmModule(),
-        TypeOrmModule.forFeature([UserEntity, LectureScheduleEntity, LectureCapacityEntity, LectureApplicationEntity]),
-        LectureModule,
-      ],
+      imports: [getPgTestTypeOrmModule(), LectureModule],
     }).compile();
 
     applyLectureUseCase = module.get<ApplyLectureUseCase>(applyLectureUseCaseSymbol);
