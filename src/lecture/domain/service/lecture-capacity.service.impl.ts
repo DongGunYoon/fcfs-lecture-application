@@ -15,7 +15,6 @@ export class LectureCapacityServiceImpl implements LectureCapacityService {
   async enroll(lectureScheduleId: number, entityManager: EntityManager): Promise<void> {
     const lectureCapacity = await this.lectureCapacityRepository.findOneWithEntityManager(entityManager, {
       where: { lectureScheduleId },
-      relations: { lectureSchedule: true },
       lock: { mode: 'pessimistic_write' },
     });
 
