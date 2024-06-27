@@ -8,7 +8,7 @@ import { UserEntity } from 'src/user/infrastructure/entity/user.entity';
 import { LectureScheduleEntity } from 'src/lecture/infrastructure/entity/lecture-schedule.entity';
 import { LectureCapacityEntity } from 'src/lecture/infrastructure/entity/lecture-capacity.entity';
 import { LectureApplicationEntity } from 'src/lecture/infrastructure/entity/lecture-application.entity';
-import { TypeOrmModule, getRepositoryToken } from '@nestjs/typeorm';
+import { getRepositoryToken } from '@nestjs/typeorm';
 import { getPgTestTypeOrmModule } from 'src/database/utils/get-test-typeorm.module';
 import { Repository } from 'typeorm';
 import { LectureEntity } from 'src/lecture/infrastructure/entity/lecture.entity';
