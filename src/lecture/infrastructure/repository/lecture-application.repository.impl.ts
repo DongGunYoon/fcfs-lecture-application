@@ -26,7 +26,10 @@ export class LectureApplicationRepositoryImpl implements LectureApplicationRepos
   }
 
   async findAllByUserId(userId: number): Promise<LectureApplicationDomain[]> {
-    const applicationEntities = await this.lectureApplicationRepository.findBy({ userId });
+    const applicationEntities = await this.lectureApplicationRepository.find({
+      where: { userId },
+      relations: { user: true, lecture: true },
+    });
 
     return applicationEntities.map(entity => LectureApplicationMapper.toDomain(entity));
   }

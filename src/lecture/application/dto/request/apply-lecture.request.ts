@@ -1,4 +1,5 @@
 import { IsInt } from 'class-validator';
+import { CreateLectureApplicationDTO } from 'src/lecture/domain/dto/create-lecture-application.dto';
 
 export class ApplyLectureRequest {
   @IsInt()
@@ -6,4 +7,12 @@ export class ApplyLectureRequest {
 
   @IsInt()
   lectureScheduleId: number;
+
+  toCreateLectureApplicationDTO(lectureId: number): CreateLectureApplicationDTO {
+    return {
+      userId: this.userId,
+      lectureId: lectureId,
+      lectureScheduleId: this.lectureScheduleId,
+    };
+  }
 }

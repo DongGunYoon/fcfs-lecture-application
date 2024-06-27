@@ -6,5 +6,5 @@ export const lectureScheduleServiceSymbol = Symbol.for('LectureScheduleService')
 export interface LectureScheduleService {
   create(dto: CreateLectureScheduleDTO): Promise<LectureScheduleDomain>;
   getAll(): Promise<LectureScheduleDomain[]>;
-  validateAppliable(id: number): Promise<void>;
+  validateAppliable(id: number): Promise<LectureScheduleDomain>;
 }

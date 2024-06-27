@@ -27,11 +27,14 @@ export class ApplyLectureUseCaseImpl implements ApplyLectureUseCase {
 
   async execute(dto: ApplyLectureRequest): Promise<void> {
     await this.userService.getOrThrow(dto.userId);
-    await this.lectureScheduleService.validateAppliable(dto.lectureScheduleId);
+    const lectureSchedule = await this.lectureScheduleService.validateAppliable(dto.lectureScheduleId);
 
     await this.dataSource.transaction(async transactionManager => {
       await this.lectureCapacityService.enroll(dto.lectureScheduleId, transactionManager);
-      await this.lectureApplicationService.create(dto, transactionManager);
+      await this.lectureApplicationService.create(
+        dto.toCreateLectureApplicationDTO(lectureSchedule.lectureId),
+        transactionManager,
+      );
     });
   }
 }

@@ -18,7 +18,7 @@ export class LectureApplicationServiceImpl implements LectureApplicationService 
   async create(dto: CreateLectureApplicationDTO, entityManager: EntityManager): Promise<LectureApplicationDomain> {
     await this.validateApplicable(dto.userId, dto.lectureScheduleId);
 
-    const lectureApplication = LectureApplicationDomain.create(dto.userId, dto.lectureScheduleId);
+    const lectureApplication = LectureApplicationDomain.create(dto);
 
     return await this.lectureApplicationRepository.save(lectureApplication, entityManager);
   }

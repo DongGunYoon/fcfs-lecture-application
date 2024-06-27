@@ -19,7 +19,7 @@ export class LectureScheduleServiceImpl implements LectureScheduleService {
     return await this.lectureScheduleRepository.create(lectureSchedule);
   }
 
-  async validateAppliable(id: number): Promise<void> {
+  async validateAppliable(id: number): Promise<LectureScheduleDomain> {
     const lectureSchedule = await this.lectureScheduleRepository.findOneById(id);
 
     if (!lectureSchedule) {
@@ -27,6 +27,8 @@ export class LectureScheduleServiceImpl implements LectureScheduleService {
     }
 
     lectureSchedule.validateAppliable();
+
+    return lectureSchedule;
   }
 
   async getAll(): Promise<LectureScheduleDomain[]> {
