@@ -1,25 +1,25 @@
 import { LectureService } from 'src/lecture/domain/interface/lecture.service';
 import { LectureDomain } from 'src/lecture/domain/model/lecture.domain';
-import { CreateLectureRequest } from '../dto/request/create-lecture.request';
+import { CreateLectureRequest } from '../../application/dto/request/create-lecture.request';
 import { ConflictException, Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { LectureRepository, lectureRepositorySymbol } from 'src/lecture/domain/interface/lecture.repository';
-import { ApplyLectureRequest } from '../dto/request/apply-lecture.request';
+import { LectureRepository, lectureRepositorySymbol } from 'src/lecture/domain/interface/repository/lecture.repository';
+import { ApplyLectureRequest } from '../../application/dto/request/apply-lecture.request';
 import { LectureApplicationDomain } from 'src/lecture/domain/model/lecture-application.domain';
 import {
   LectureApplicationRepository,
   lectureApplicationRepositorySymbol,
-} from 'src/lecture/domain/interface/lecture-application.repository';
+} from 'src/lecture/domain/interface/repository/lecture-application.repository';
 import { DataSource, EntityManager } from 'typeorm';
 import {
   LectureScheduleRepository,
   lectureScheduleRepositorySymbol,
-} from 'src/lecture/domain/interface/lecture-schedule.repository';
+} from 'src/lecture/domain/interface/repository/lecture-schedule.repository';
 import { LectureScheduleDomain } from 'src/lecture/domain/model/lecture-schedule.domain';
 import { CreateLectureScheduleDTO } from 'src/lecture/domain/dto/create-lecture-schedule.dto';
 import {
   LectureCapacityRepository,
   lectureCapacityRepositorySymbol,
-} from 'src/lecture/domain/interface/lecture-capacity.repository';
+} from 'src/lecture/domain/interface/repository/lecture-capacity.repository';
 import { UserService, userServiceSymbol } from 'src/user/domain/interface/service/user.service';
 
 @Injectable()

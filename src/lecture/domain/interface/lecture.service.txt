@@ -5,7 +5,7 @@ import { LectureApplicationDomain } from '../model/lecture-application.domain';
 import { LectureScheduleDomain } from '../model/lecture-schedule.domain';
 import { CreateLectureScheduleDTO } from '../dto/create-lecture-schedule.dto';
 
-export const lectureServiceSymbol = Symbol.for('LectureService');
+// export const lectureServiceSymbol = Symbol.for('LectureService');
 
 export interface LectureService {
   create(request: CreateLectureRequest): Promise<LectureDomain>;

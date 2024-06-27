@@ -41,4 +41,10 @@ export class LectureScheduleDomain {
       lectureCapacity,
     );
   }
+
+  validateAppliable(): void {
+    if (this.applicationStartAt > new Date()) {
+      throw new BadRequestException('수강 신청 가능 일자가 아닙니다.');
+    }
+  }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { LectureRepository } from 'src/lecture/domain/interface/lecture.repository';
+import { LectureRepository } from 'src/lecture/domain/interface/repository/lecture.repository';
 import { LectureEntity } from '../entity/lecture.entity';
 import { LectureDomain } from 'src/lecture/domain/model/lecture.domain';
 import { Repository } from 'typeorm';

@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { UserService, userServiceSymbol } from 'src/user/domain/interface/service/user.service';
-import { SignUpUseCase } from 'src/user/domain/interface/use-case/user.use-case';
+import { SignUpUseCase } from 'src/user/domain/interface/use-case/sign-up.use-case';
 import { UserDomain } from 'src/user/domain/model/user.domain';
 
 export class SignUpUseCaseImpl implements SignUpUseCase {

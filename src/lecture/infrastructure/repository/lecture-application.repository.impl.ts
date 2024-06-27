@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { LectureApplicationRepository } from 'src/lecture/domain/interface/lecture-application.repository';
+import { LectureApplicationRepository } from 'src/lecture/domain/interface/repository/lecture-application.repository';
 import { LectureApplicationDomain } from 'src/lecture/domain/model/lecture-application.domain';
 import { LectureApplicationEntity } from '../entity/lecture-application.entity';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { LectureApplicationMapper } from 'src/lecture/domain/mapper/lecture-application.mapper';
 
 @Injectable()
@@ -21,10 +21,6 @@ export class LectureApplicationRepositoryImpl implements LectureApplicationRepos
     return LectureApplicationMapper.toDomain(lectureApplicationEntity);
   }
 
-  async countByLectureScheduleId(lectureScheduleId: number): Promise<number> {
-    return await this.lectureApplicationRepository.count({ where: { lectureScheduleId } });
-  }
-
   async existsByUserIdAndLectureScheduleId(userId: number, lectureScheduleId: number): Promise<boolean> {
     return await this.lectureApplicationRepository.existsBy({ userId, lectureScheduleId });
   }
@@ -33,5 +29,14 @@ export class LectureApplicationRepositoryImpl implements LectureApplicationRepos
     const applicationEntities = await this.lectureApplicationRepository.findBy({ userId });
 
     return applicationEntities.map(entity => LectureApplicationMapper.toDomain(entity));
+  }
+
+  async save(domain: LectureApplicationDomain, entityManager?: EntityManager): Promise<LectureApplicationDomain> {
+    const lectureEntity = LectureApplicationMapper.toEntity(domain);
+
+    if (entityManager) await entityManager.save(LectureApplicationEntity, lectureEntity);
+    else await this.lectureApplicationRepository.save(lectureEntity);
+
+    return LectureApplicationMapper.toDomain(lectureEntity);
   }
 }

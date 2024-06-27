@@ -6,7 +6,7 @@ import { UserServiceImpl } from './domain/service/user.service.impl';
 import { userRepositorySymbol } from './domain/interface/repository/user.repository';
 import { UserRepositoryImpl } from './infrastructure/repository/user.repository.impl';
 import { UserController } from './presentation/controller/user.controller';
-import { signUpUseCaseSymbol } from './domain/interface/use-case/user.use-case';
+import { signUpUseCaseSymbol } from './domain/interface/use-case/sign-up.use-case';
 import { SignUpUseCaseImpl } from './application/use-case/sign-up.use-case.impl';
 
 @Module({

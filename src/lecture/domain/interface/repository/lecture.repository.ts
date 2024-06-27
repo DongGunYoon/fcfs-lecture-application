@@ -1,5 +1,5 @@
 import { Nullable } from 'src/common/type/native';
-import { LectureDomain } from '../model/lecture.domain';
+import { LectureDomain } from '../../model/lecture.domain';
 
 export const lectureRepositorySymbol = Symbol.for('LectureRepository');
 
